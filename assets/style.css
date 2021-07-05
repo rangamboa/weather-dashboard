@@ -10,7 +10,7 @@
 
 input {
     width: 100%;
-    border: 1px solid grey;
+    border: 1px solid lightslategrey;
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 13px;
@@ -28,4 +28,28 @@ input {
 
 .btn-light:hover {
     border: 1px solid lightslategrey;
+}
+
+.card {
+    border: 0;
+}
+
+#currentDisplay {
+    border: 1px solid grey;
+    border-radius: 0px;
+    margin: 10px 10px 0px 0px;
+    padding: 5px;
+}
+
+#forecastDisplay {
+    margin-top: 15px;
+}
+
+.forecastCard {
+    margin-bottom: 15px;
+}
+
+.dailyCard {
+    background-color: steelblue;
+    color: white;
 }

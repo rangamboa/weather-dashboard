@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <div class="owire card col-12">
+            <div class="card col-12">
                 <div class="card-body">
                     <button class="btn btn-secondary btn-long">Search</button>
                     <button class="btn btn-secondary btn-long">Search</button>
@@ -46,24 +46,59 @@
 
         </div>
 
-        <div class="wire col-12 col-sm-6 col-md-8 col-lg-9">
+        <div class="col-12 col-sm-6 col-md-8 col-lg-9">
 
-            <div class="card col-12">
-                <h2><span id="currentCity">Current City</span> (<span id="currentDate">Today's Date</span>)</h2>
+            <div class="card col-12" id="currentDisplay">
+                <h2><span id="currentCity"></span> (<span id="currentDate"></span>)</h2>
                 <p>Temp: <span id="cityTemp">-</span> &deg;F</p>
                 <p>Wind: <span id="cityWind">-</span> MPH</p>
                 <p>Humidity: <span id="cityHum">-</span>%</p>
                 <p>UV Index: <span id="cityUv">-<span></p>
             </div>
 
-            <div class="row wire d-flex justify-content-around">
+            <div class="row d-flex justify-content-around" id="forecastDisplay">
 
                 <h4>5-Day Forecast:</h4>
-                <div class="wire col-12 col-sm-12 col-md-6 col-lg-2">day 1 card</div>
-                <div class="wire col-12 col-sm-12 col-md-6 col-lg-2">day 2 card</div>
-                <div class="wire col-12 col-sm-12 col-md-6 col-lg-2">day 3 card</div>
-                <div class="wire col-12 col-sm-12 col-md-6 col-lg-2">day 4 card</div>
-                <div class="wire col-12 col-sm-12 col-md-6 col-lg-2">day 5 card</div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-2 forecastCard" id="day1">
+                   <ul class="list-group list-group-flush">
+                       <li class="list-group-item dailyCard">An item</li>
+                        <li class="list-group-item dailyCard">A second item</li>
+                        <li class="list-group-item dailyCard">A third item</li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-2 forecastCard" id="day2">
+                   <ul class="list-group list-group-flush">
+                       <li class="list-group-item dailyCard">An item</li>
+                        <li class="list-group-item dailyCard">A second item</li>
+                        <li class="list-group-item dailyCard">A third item</li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-2 forecastCard" id="day3">
+                   <ul class="list-group list-group-flush">
+                       <li class="list-group-item dailyCard">An item</li>
+                        <li class="list-group-item dailyCard">A second item</li>
+                        <li class="list-group-item dailyCard">A third item</li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-2 forecastCard" id="day4">
+                   <ul class="list-group list-group-flush">
+                       <li class="list-group-item dailyCard">An item</li>
+                        <li class="list-group-item dailyCard">A second item</li>
+                        <li class="list-group-item dailyCard">A third item</li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-2 forecastCard" id="day5">
+                   <ul class="list-group list-group-flush">
+                       <li class="list-group-item dailyCard">An item</li>
+                        <li class="list-group-item dailyCard">A second item</li>
+                        <li class="list-group-item dailyCard">A third item</li>
+                    </ul>
+                </div>
 
             </div>
         

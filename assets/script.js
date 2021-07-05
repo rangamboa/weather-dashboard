@@ -1,5 +1,7 @@
 // Declare variables.
 var dateNow;
+var requestUrl;
+
 var cityInput = $('#city');
 var searchBtn = $('#search');
 var cityName = $('#currentCity');
@@ -9,8 +11,10 @@ var currHum = $('#cityHum');
 var currUv = $('#cityUv');
 var cityLat;
 var cityLon;
-var requestUrl;
-var responseText = document.getElementById('response-text');
+
+var forecast = [];
+
+
 
 function getDate() {
     timeNow = moment().format("MM[/]DD[/]YYYY")
@@ -50,7 +54,6 @@ searchBtn.on('click', function(event) {
 });
 
 function getInfo() {
-    //console.log('lat ' + cityLat + ' lon ' + cityLon);
 
     // Insert latitude and longitude into API One Call.
     requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + cityLat + '&lon=' + cityLon + '&units=imperial&exclude=minutely,hourly&appid=b2a7b5db503cb0af44066eca2b902469';    
@@ -62,12 +65,19 @@ function getInfo() {
         .then(response => response.json())
         .then(data => {
         console.log(data);
-        console.log(data.current.temp);
+        // console.log(data.current.temp);
 
+
+        // Display current weather info in upper section of layout.
         currTemp.text(data.current.temp);
         currWind.text(data.current.wind_speed);
         currHum.text(data.current.humidity);
         currUv.text(data.current.uvi);
+
+        // Change background color for UV Index depending on value.
+        console.log(currUv.text);
+
+        // Display 5-day forecast info in lower section of layout.
     });
 }
 
