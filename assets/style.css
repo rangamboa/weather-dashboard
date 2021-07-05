@@ -7,3 +7,25 @@
 .wire {
     border: 1px dotted grey;
 }
+
+input {
+    width: 100%;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 13px;
+}
+
+.btn-long {
+    margin: 5px auto;
+    width: 100%;
+}
+
+.btn-light {
+    color: white;
+    background-color: lightskyblue;
+}
+
+.btn-light:hover {
+    border: 1px solid lightslategrey;
+}

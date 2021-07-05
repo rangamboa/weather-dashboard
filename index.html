@@ -17,35 +17,42 @@
     </div>
 
     <!-- display layout -->
-    <div class="row wire">
 
-        <div class="wire col-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="row">
 
-            <div class="wire card col-12">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+
+            <div class="card col-12">
+                <div class="card-body" style="border-bottom: 1px solid lightslategrey;">
+                    <h3>Search for a City:</h3>
+                    <form>
+                        <input type="text" id="city" placeholder="Enter City Name">
+                        <button class="btn btn-primary btn-light btn-long">Search</button>
+                    </form>
                 </div>
             </div>
-                
-            <div class="wire">search field and button</div>
 
-            <div class="wire card col-12">stored search results</div>
+            <div class="owire card col-12">
+                <div class="card-body">
+                    <button class="btn btn-primary btn-light btn-long">Search</button>
+                    <button class="btn btn-primary btn-light btn-long">Search</button>
+                    <button class="btn btn-primary btn-light btn-long">Search</button>
+                    <button class="btn btn-primary btn-light btn-long">Search</button>
+                    <button class="btn btn-primary btn-light btn-long">Search</button>
+                </div>
+            </div>
 
         </div>
 
         <div class="wire col-12 col-sm-6 col-md-8 col-lg-9">
 
             <div class="card col-12">
-                <h1>current city: today's info</h1>
+                <h2>current city: today's info</h2>
             </div>
 
             <div class="row wire d-flex justify-content-around">
 
-                <h2>5-Day Forecast</h2>
+                <h4>5-Day Forecast</h4>
                 <div class="wire col-12 col-sm-12 col-md-6 col-lg-2">day 1 card</div>
                 <div class="wire col-12 col-sm-12 col-md-6 col-lg-2">day 2 card</div>
                 <div class="wire col-12 col-sm-12 col-md-6 col-lg-2">day 3 card</div>
