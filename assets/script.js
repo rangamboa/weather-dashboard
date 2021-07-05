@@ -1,10 +1,14 @@
 // Declare variables.
+var dateNow;
 var cityInput = $('#city');
 var searchBtn = $('#search');
 var cityName = $('#currentCity');
+var currTemp = $('#cityTemp');
+var currWind = $('#cityWind');
+var currHum = $('#cityHum');
+var currUv = $('#cityUv');
 var cityLat;
 var cityLon;
-var dateNow;
 var requestUrl;
 var responseText = document.getElementById('response-text');
 
@@ -41,15 +45,30 @@ searchBtn.on('click', function(event) {
             cityName.text(data[0].name);
 
             // Call function for API using lat and lon coordinates to obtain more information.
-            getWeather();
+            getInfo();
         })
 });
 
-function getWeather() {
+function getInfo() {
     //console.log('lat ' + cityLat + ' lon ' + cityLon);
 
+    // Insert latitude and longitude into API One Call.
     requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + cityLat + '&lon=' + cityLon + '&units=imperial&exclude=minutely,hourly&appid=b2a7b5db503cb0af44066eca2b902469';    
+    
     console.log(requestUrl);
+
+    fetch(requestUrl)
+
+        .then(response => response.json())
+        .then(data => {
+        console.log(data);
+        console.log(data.current.temp);
+
+        currTemp.text(data.current.temp);
+        currWind.text(data.current.wind_speed);
+        currHum.text(data.current.humidity);
+        currUv.text(data.current.uvi);
+    });
 }
 
 // Retrieve today's date from Moment.js.
