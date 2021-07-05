@@ -41,6 +41,10 @@ input {
     padding: 5px;
 }
 
+#cityUV {
+    padding: 5px;
+}
+
 #forecastDisplay {
     margin-top: 15px;
 }

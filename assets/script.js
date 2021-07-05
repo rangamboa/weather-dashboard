@@ -9,19 +9,18 @@ var currTemp = $('#cityTemp');
 var currWind = $('#cityWind');
 var currHum = $('#cityHum');
 var currUv = $('#cityUv');
+var currUvColor;
 var cityLat;
 var cityLon;
 
 var forecast = [];
-
-
 
 function getDate() {
     timeNow = moment().format("MM[/]DD[/]YYYY")
     $("#currentDate").text(timeNow);
 }
 
-// Collect search term via form.
+// Listen for a click on the Search button.
 searchBtn.on('click', function(event) {
 
     event.preventDefault();
@@ -74,8 +73,23 @@ function getInfo() {
         currHum.text(data.current.humidity);
         currUv.text(data.current.uvi);
 
-        // Change background color for UV Index depending on value.
-        console.log(currUv.text);
+        // Change font/background color for UV Index depending on value.
+        if(data.current.uvi <= 2) {
+            uvColor = 'white';
+            uvBg = 'green';
+        } else if(data.current.uvi <= 5) {
+            uvColor = 'black';
+            uvBg = 'yellow';
+        } else if(data.current.uvi <= 7) {
+            uvColor = 'black';
+            uvBg = 'orange';
+        } else {
+            uvColor = 'white';
+            uvBg = 'red';
+        }
+        currUv.css('color', uvColor);
+        currUv.css('background-color', uvBg);
+        
 
         // Display 5-day forecast info in lower section of layout.
     });
