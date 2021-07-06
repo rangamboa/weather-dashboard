@@ -17,6 +17,7 @@ var cityLat;
 var cityLon;
 var iconCode;
 var iconUrl;
+var searchTerm;
 
 var cities = [];
 
@@ -55,37 +56,34 @@ function getDate() {
     $("#currentDate").text(timeNow);
 }
 
-buttonEl.on('click', function(event) {
+cityList.on('click', function(event) {
+
     event.preventDefault();
-
-    alert('clicked history');
-
-    console.log(event.target.textContent);
-
-    getLatLon(event.target.textContent);
+    searchTerm = event.target.textContent;
+    getLatLon(searchTerm);
 });
 
 searchBtn.on('click', function(event) {
 
     event.preventDefault();
+    searchTerm = cityInput.val();
 
-    alert('click');
-
-    console.log(event.target.textContent);
-
-    if (searchBtn.text === '') return;
-
-    // Retrieve search term.
-    cityInput.textContent = '';
-
-    getLatLon(event.target.textContent);
-
+    if (searchTerm === '') {
+        alert('Please enter a city name to\nsearch current weather and forecast.');
+        return;
+    } else {
+        // Clear search field.
+        cityInput.textContent = '';
+        getLatLon(searchTerm);
+    }
 });
 
-function getLatLon() {
+function getLatLon(searchTerm) {
+
+    console.log(searchTerm);
 
     // Insert search term into geocoding API call.
-    requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityInput.val() + '&limit=1&units=imperial&appid=b2a7b5db503cb0af44066eca2b902469';
+    requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + searchTerm + '&limit=1&units=imperial&appid=b2a7b5db503cb0af44066eca2b902469';
 
     // console.log(requestUrl);
 
@@ -101,10 +99,8 @@ function getLatLon() {
             // Retrieve and display current city name.
             cityName.text(data[0].name);
 
-            cities.unshift(data[0].name);
-
             // Store city name in array to be pushed to local storage.
-            // cities.unshift(data[0].name);
+            cities.unshift(data[0].name);
 
             console.log(cities);
 
