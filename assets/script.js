@@ -2,7 +2,7 @@
 var dateNow;
 var requestUrl;
 
-var buttonEl = $('button');
+var buttonEl = $('.searchBtn');
 var cityInput = $('#city');
 var searchBtn = $('#search');
 var cityName = $('#currentCity');
@@ -39,9 +39,10 @@ function writeCities() {
     // Create a new button for each city in search history.
     for (var i = 0; i < cities.length; i++) {
         var cityItem = cities[i];
-        cityList.append('<button class="btn btn-secondary btn-long">'+cityItem+'</button>');
+        cityList.append('<button class="btn btn-secondary btn-long searchBtn">'+cityItem+'</button>');
+        buttonEl = $('.searchBtn');
     }
-   
+   console.log(buttonEl);
 }
 
 function storeCities() {
@@ -55,11 +56,19 @@ function getDate() {
     $("#currentDate").text(timeNow);
 }
 
-searchBtn.on('click', function(event) {
+buttonEl.on('click', function(event) {
 
     event.preventDefault();
 
+    alert('click');
+
     console.log(event.target.textContent);
+    console.log(buttonEl);  
+    console.log(buttonEl.length);  
+
+    for (var i = 0; i < buttonEl.length; i++) {
+        console.log(buttonEl[i].innerHTML);
+    }
 
     if (searchBtn.text === '') return;
 
@@ -84,7 +93,7 @@ searchBtn.on('click', function(event) {
             cityName.text(data[0].name);
 
             // Store city name in array to be pushed to local storage.
-            cities.push(data[0].name);
+            cities.unshift(data[0].name);
 
             console.log(cities);
 
