@@ -40,15 +40,20 @@ searchBtn.on('click', function(event) {
     fetch(requestUrl)
 
         .then(response => response.json())
+
         .then(data => {
-            // console.log(data);
 
             // Retrieve latitudinal and longitudinal coordinates.
             cityLat = data[0].lat;
             cityLon = data[0].lon;
 
+
+
             // Retrieve and display current city name.
             cityName.text(data[0].name);
+
+            timeNow = moment().format("MM[/]DD[/]YYYY")
+            $("#currentDate").text('('+timeNow+')');
 
             // Call function for API using lat and lon coordinates to obtain more information.
             getInfo();
@@ -97,33 +102,36 @@ function getInfo() {
         currUv.css('color', uvColor);
         currUv.css('background-color', uvBg); 
 
-        // Display 5-day forecast info in lower section of layout:
+        // Display forecast information in lower section of layout:
 
-        // Loop through API data.
+        // Loop through API data 5 times, once for each day in forecast.
         for (var i = 1; i < 6; i++) {
 
+            // Set the div in which to write data.
             var dayId = '#day' + i;
-            // console.log(dayId);
 
+            // Pull data and convert to string.
             var futureDate = moment(data.daily[i].dt, 'X').format('MM[/]DD[/]YYYY');
             var futureIconCode = (data.daily[i].weather[0].icon).toString();
             var futureTemp = (data.daily[i].temp.day).toString();
             var futureWind = (data.daily[i].wind_speed).toString();
             var futureHum = (data.daily[i].humidity).toString();  
 
+            // Empty div of prior data, then generate dynamically with list items.
+            $(dayId).empty();
             $(dayId).append('<ul class="list-group list-group-flush">');
             $(dayId).append('<li class="list-group-item dailyCard"><h5>'+futureDate+'</h5></li>');
             $(dayId).append('<li class="list-group-item dailyCard"><img src="http://openweathermap.org/img/w/'+futureIconCode+'.png" /></li>');
             $(dayId).append('<li class="list-group-item dailyCard">'+futureTemp+' &deg;F</li>');
-            $(dayId).append('<li class="list-group-item dailyCard">'+futureWind+' MPG</li>');
+            $(dayId).append('<li class="list-group-item dailyCard">'+futureWind+' MPH</li>');
             $(dayId).append('<li class="list-group-item dailyCard">'+futureHum+' %</li>');
             $(dayId).append('</ul>');
-
         }
       
     });
 }
 
-// Retrieve today's date from Moment.js.
-getDate();
+function invalidEntry() {
+    alert('pck a real city you hoser');
+}
 
