@@ -40,13 +40,12 @@ function writeCities() {
     for (var i = 0; i < cities.length; i++) {
         var cityItem = cities[i];
         cityList.append('<button class="btn btn-secondary btn-long searchBtn">'+cityItem+'</button>');
-        buttonEl = $('.searchBtn');
     }
-   console.log(buttonEl);
+    buttonEl = $('.searchBtn');
+    console.log(buttonEl);
 }
 
 function storeCities() {
-    
     // Stringify object and set a key in localStorage to "cities" array.
     localStorage.setItem("cities", JSON.stringify(cities));
 }
@@ -57,23 +56,33 @@ function getDate() {
 }
 
 buttonEl.on('click', function(event) {
+    event.preventDefault();
+
+    alert('clicked history');
+
+    console.log(event.target.textContent);
+
+    getLatLon(event.target.textContent);
+});
+
+searchBtn.on('click', function(event) {
 
     event.preventDefault();
 
     alert('click');
 
     console.log(event.target.textContent);
-    console.log(buttonEl);  
-    console.log(buttonEl.length);  
-
-    for (var i = 0; i < buttonEl.length; i++) {
-        console.log(buttonEl[i].innerHTML);
-    }
 
     if (searchBtn.text === '') return;
 
     // Retrieve search term.
     cityInput.textContent = '';
+
+    getLatLon(event.target.textContent);
+
+});
+
+function getLatLon() {
 
     // Insert search term into geocoding API call.
     requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityInput.val() + '&limit=1&units=imperial&appid=b2a7b5db503cb0af44066eca2b902469';
@@ -92,8 +101,10 @@ buttonEl.on('click', function(event) {
             // Retrieve and display current city name.
             cityName.text(data[0].name);
 
-            // Store city name in array to be pushed to local storage.
             cities.unshift(data[0].name);
+
+            // Store city name in array to be pushed to local storage.
+            // cities.unshift(data[0].name);
 
             console.log(cities);
 
@@ -107,7 +118,7 @@ buttonEl.on('click', function(event) {
             // Call function for API using lat and lon coordinates to obtain more information.
             getInfo();
         })
-});
+}
 
 function getInfo() {
 
