@@ -2,6 +2,7 @@
 var dateNow;
 var requestUrl;
 
+var buttonEl = $('button');
 var cityInput = $('#city');
 var searchBtn = $('#search');
 var cityName = $('#currentCity');
@@ -10,27 +11,60 @@ var currWind = $('#cityWind');
 var currHum = $('#cityHum');
 var currUv = $('#cityUv');
 var currIcon = $('#wIcon');
+var cityList = $('#cityHistory');
 var currUvColor;
 var cityLat;
 var cityLon;
 var iconCode;
 var iconUrl;
 
-var forecast = [];
+var cities = [];
+
+function init() {
+
+    // Retreive stored city names from localStorage.
+    var storedCities = JSON.parse(localStorage.getItem("cities"));
+  
+    // If cities were retrieved, then update the "cities" array.
+    if (storedCities !== null) cities = storedCities;
+
+    writeCities();
+}
+
+function writeCities() {
+
+    // Resets city list.
+    cityList.empty();
+
+    // Create a new button for each city in search history.
+    for (var i = 0; i < cities.length; i++) {
+        var cityItem = cities[i];
+        cityList.append('<button class="btn btn-secondary btn-long">'+cityItem+'</button>');
+    }
+   
+}
+
+function storeCities() {
+    
+    // Stringify object and set a key in localStorage to "cities" array.
+    localStorage.setItem("cities", JSON.stringify(cities));
+}
 
 function getDate() {
     var timeNow = moment().format("MM[/]DD[/]YYYY")
     $("#currentDate").text(timeNow);
 }
 
-// Listen for a click on the Search button.
 searchBtn.on('click', function(event) {
 
     event.preventDefault();
 
+    console.log(event.target.textContent);
+
+    if (searchBtn.text === '') return;
+
     // Retrieve search term.
-    cityInput.innerHTML = '';
-    console.log(cityInput.val());
+    cityInput.textContent = '';
 
     // Insert search term into geocoding API call.
     requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityInput.val() + '&limit=1&units=imperial&appid=b2a7b5db503cb0af44066eca2b902469';
@@ -40,7 +74,6 @@ searchBtn.on('click', function(event) {
     fetch(requestUrl)
 
         .then(response => response.json())
-
         .then(data => {
 
             // Retrieve latitudinal and longitudinal coordinates.
@@ -50,7 +83,16 @@ searchBtn.on('click', function(event) {
             // Retrieve and display current city name.
             cityName.text(data[0].name);
 
-            timeNow = moment().format("MM[/]DD[/]YYYY")
+            // Store city name in array to be pushed to local storage.
+            cities.push(data[0].name);
+
+            console.log(cities);
+
+            storeCities();
+            writeCities();
+
+            // Display current date.
+            timeNow = moment().format("M[/]D[/]YYYY")
             $("#currentDate").text('('+timeNow+')');
 
             // Call function for API using lat and lon coordinates to obtain more information.
@@ -64,7 +106,6 @@ function getInfo() {
     requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + cityLat + '&lon=' + cityLon + '&units=imperial&exclude=minutely,hourly&appid=b2a7b5db503cb0af44066eca2b902469';    
     
     console.log(requestUrl);
-
     fetch(requestUrl)
 
         .then(response => response.json())
@@ -109,27 +150,24 @@ function getInfo() {
             var dayId = '#day' + i;
 
             // Pull data and convert to string.
-            var futureDate = moment(data.daily[i].dt, 'X').format('MM[/]DD[/]YYYY');
-            var futureIconCode = (data.daily[i].weather[0].icon).toString();
+            var futureDate = moment(data.daily[i].dt, 'X').format('M[/]D[/]YYYY');
+            var futureIcon = (data.daily[i].weather[0].icon).toString();
             var futureTemp = (data.daily[i].temp.day).toString();
             var futureWind = (data.daily[i].wind_speed).toString();
             var futureHum = (data.daily[i].humidity).toString();  
 
-            // Empty div of prior data, then generate dynamically with list items.
+            // Empty div of prior data, then generate list items dynamically.
             $(dayId).empty();
             $(dayId).append('<ul class="list-group list-group-flush">');
             $(dayId).append('<li class="list-group-item dailyCard"><h5>'+futureDate+'</h5></li>');
-            $(dayId).append('<li class="list-group-item dailyCard"><img src="http://openweathermap.org/img/w/'+futureIconCode+'.png" /></li>');
-            $(dayId).append('<li class="list-group-item dailyCard">'+futureTemp+' &deg;F</li>');
-            $(dayId).append('<li class="list-group-item dailyCard">'+futureWind+' MPH</li>');
-            $(dayId).append('<li class="list-group-item dailyCard">'+futureHum+' %</li>');
+            $(dayId).append('<li class="list-group-item dailyCard"><img src="http://openweathermap.org/img/w/'+futureIcon+'.png" /></li>');
+            $(dayId).append('<li class="list-group-item dailyCard">Temp: '+futureTemp+' &deg;F</li>');
+            $(dayId).append('<li class="list-group-item dailyCard">Wind: '+futureWind+' MPH</li>');
+            $(dayId).append('<li class="list-group-item dailyCard">Humidity: '+futureHum+'%</li>');
             $(dayId).append('</ul>');
         }
       
     });
 }
 
-function invalidEntry() {
-    alert('pck a real city you hoser');
-}
-
+init();
