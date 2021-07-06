@@ -29,7 +29,7 @@ searchBtn.on('click', function(event) {
     event.preventDefault();
 
     // Retrieve search term.
-    cityInput = cityInput;
+    cityInput.innerHTML = '';
     console.log(cityInput.val());
 
     // Insert search term into geocoding API call.
@@ -46,8 +46,6 @@ searchBtn.on('click', function(event) {
             // Retrieve latitudinal and longitudinal coordinates.
             cityLat = data[0].lat;
             cityLon = data[0].lon;
-
-
 
             // Retrieve and display current city name.
             cityName.text(data[0].name);

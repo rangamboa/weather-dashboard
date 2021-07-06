@@ -47,6 +47,8 @@ input {
 
 .forecastCard {
     margin-bottom: 15px;
+    min-width: 20%;
+    max-width: 100%;
 }
 
 .dailyCard {
