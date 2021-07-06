@@ -48,7 +48,7 @@
         <div class="col-12 col-sm-6 col-md-8 col-lg-9">
 
             <div class="card col-12" id="currentDisplay">
-                <h2><span id="currentCity"></span> (<span id="currentDate"></span>)<img id="wIcon" src=""></h2>
+                <h2 class="mb-3"><span id="currentCity"></span> (<span id="currentDate"></span>)<img id="wIcon" src=""></h2>
                 <p>Temp: <span id="cityTemp">-</span> &deg;F</p>
                 <p>Wind: <span id="cityWind">-</span> MPH</p>
                 <p>Humidity: <span id="cityHum">-</span>%</p>
@@ -57,18 +57,14 @@
 
             <div class="row mt-3"><h4>5-Day Forecast:</h4></div>
 
-            <div class="row d-flex justify-content-around" id="forecastDisplay">
+            <div class="row d-flex justify-content-between" id="forecastDisplay">
 
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-2 forecastCard" id="day1">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item dailyCard">Date</li>
-                            <li class="list-group-item dailyCard">Icon</li>
-                            <li class="list-group-item dailyCard">Temp</li>
-                            <li class="list-group-item dailyCard">Wind</li>
-                            <li class="list-group-item dailyCard">Humidity</li>
-                        </ul>
-                    </div>
-                
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-2 forecastCard" id="day1"></div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-2 forecastCard" id="day2"></div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-2 forecastCard" id="day3"></div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-2 forecastCard" id="day4"></div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-2 forecastCard" id="day5"></div>
+
             </div>
         
         </div>

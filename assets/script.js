@@ -19,7 +19,7 @@ var iconUrl;
 var forecast = [];
 
 function getDate() {
-    timeNow = moment().format("MM[/]DD[/]YYYY")
+    var timeNow = moment().format("MM[/]DD[/]YYYY")
     $("#currentDate").text(timeNow);
 }
 
@@ -97,9 +97,30 @@ function getInfo() {
         currUv.css('color', uvColor);
         currUv.css('background-color', uvBg); 
 
-        // Display 5-day forecast info in lower section of layout.
+        // Display 5-day forecast info in lower section of layout:
 
-        // Loop through 5 days.
+        // Loop through API data.
+        for (var i = 1; i < 6; i++) {
+
+            var dayId = '#day' + i;
+            // console.log(dayId);
+
+            var futureDate = moment(data.daily[i].dt, 'X').format('MM[/]DD[/]YYYY');
+            var futureIconCode = (data.daily[i].weather[0].icon).toString();
+            var futureTemp = (data.daily[i].temp.day).toString();
+            var futureWind = (data.daily[i].wind_speed).toString();
+            var futureHum = (data.daily[i].humidity).toString();  
+
+            $(dayId).append('<ul class="list-group list-group-flush">');
+            $(dayId).append('<li class="list-group-item dailyCard"><h5>'+futureDate+'</h5></li>');
+            $(dayId).append('<li class="list-group-item dailyCard"><img src="http://openweathermap.org/img/w/'+futureIconCode+'.png" /></li>');
+            $(dayId).append('<li class="list-group-item dailyCard">'+futureTemp+' &deg;F</li>');
+            $(dayId).append('<li class="list-group-item dailyCard">'+futureWind+' MPG</li>');
+            $(dayId).append('<li class="list-group-item dailyCard">'+futureHum+' %</li>');
+            $(dayId).append('</ul>');
+
+        }
+      
     });
 }
 
