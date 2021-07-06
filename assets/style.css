@@ -56,4 +56,5 @@ input {
 .dailyCard {
     background-color: steelblue;
     color: white;
+    border: 0px;
 }

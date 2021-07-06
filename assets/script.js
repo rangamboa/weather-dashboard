@@ -9,9 +9,12 @@ var currTemp = $('#cityTemp');
 var currWind = $('#cityWind');
 var currHum = $('#cityHum');
 var currUv = $('#cityUv');
+var currIcon = $('#wIcon');
 var currUvColor;
 var cityLat;
 var cityLon;
+var iconCode;
+var iconUrl;
 
 var forecast = [];
 
@@ -64,8 +67,12 @@ function getInfo() {
         .then(response => response.json())
         .then(data => {
         console.log(data);
-        // console.log(data.current.temp);
 
+        // Display current weather icon.
+        iconCode = data.current.weather[0].icon;
+        iconCode.toString();
+        iconUrl = 'http://openweathermap.org/img/w/' + iconCode + '.png';
+        currIcon.attr('src', iconUrl);
 
         // Display current weather info in upper section of layout.
         currTemp.text(data.current.temp);
@@ -73,14 +80,14 @@ function getInfo() {
         currHum.text(data.current.humidity);
         currUv.text(data.current.uvi);
 
-        // Change font/background color for UV Index depending on value.
-        if(data.current.uvi <= 2) {
+        // Change font/background color for UV Index depending on value, for readability.
+        if (data.current.uvi <= 2) {
             uvColor = 'white';
             uvBg = 'green';
-        } else if(data.current.uvi <= 5) {
+        } else if (data.current.uvi <= 5) {
             uvColor = 'black';
             uvBg = 'yellow';
-        } else if(data.current.uvi <= 7) {
+        } else if (data.current.uvi <= 7) {
             uvColor = 'black';
             uvBg = 'orange';
         } else {
@@ -88,10 +95,11 @@ function getInfo() {
             uvBg = 'red';
         }
         currUv.css('color', uvColor);
-        currUv.css('background-color', uvBg);
-        
+        currUv.css('background-color', uvBg); 
 
         // Display 5-day forecast info in lower section of layout.
+
+        // Loop through 5 days.
     });
 }
 
