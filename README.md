@@ -43,10 +43,10 @@ Medium-size screen, responsive reconfiguration of forecast information:
 Small-size screen, responsive reconfiguration of forecast information:
 ![screenshot 04](images/weather-dashboard-screenshot-04.jpg)
 
-Mobile-size screen, single column display of all information:
+Mobile-size screen, single column display of all information:  
 ![screenshot 05](images/weather-dashboard-screenshot-05.jpg)
 
-Mobile-size screen, single column display of all information:
+Mobile-size screen, single column display of all information:  
 ![screenshot 06](images/weather-dashboard-screenshot-06.jpg)
 
 - - -
