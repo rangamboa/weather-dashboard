@@ -191,7 +191,7 @@ function getInfo() {
             $(dayId).empty();
             $(dayId).append('<ul class="list-group list-group-flush">');
             $(dayId).append('<li class="list-group-item dailyCard"><h5>'+futureDate+'</h5></li>');
-            $(dayId).append('<li class="list-group-item dailyCard"><img src="http://openweathermap.org/img/w/'+futureIcon+'.png" /></li>');
+            $(dayId).append('<li class="list-group-item dailyCard"><img src="https://openweathermap.org/img/w/'+futureIcon+'.png" /></li>');
             $(dayId).append('<li class="list-group-item dailyCard">Temp: '+futureTemp+' &deg;F</li>');
             $(dayId).append('<li class="list-group-item dailyCard">Wind: '+futureWind+' MPH</li>');
             $(dayId).append('<li class="list-group-item dailyCard">Humidity: '+futureHum+'%</li>');
