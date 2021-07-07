@@ -17,9 +17,11 @@
             <h1 class="p-3">Weather Dashboard</h1>
     </div>
 
-    <!-- display layout -->
+    <!-- main display layout -->
 
     <div class="row">
+
+        <!-- left column, displaying search bar and search history -->
 
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
 
@@ -37,8 +39,9 @@
                 <div class="card-body" id="cityHistory"></div>
             </div>
             
-
         </div>
+
+        <!-- right column, displaying current city and 5-day forecast -->
 
         <div class="col-12 col-sm-6 col-md-8 col-lg-9">
 
@@ -52,6 +55,8 @@
 
             <div class="row mt-3"><h4>5-Day Forecast:</h4></div>
 
+            <!-- contents of these divs will be generated dynamically -->
+
             <div class="row d-flex align-items-stretch justify-content-start" id="forecastDisplay">
 
                     <div class="col-12 col-sm-6 col-md-4 col-lg-2 forecastCard" id="day1"></div>
@@ -64,13 +69,12 @@
         
         </div>
 
-
-
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>   
     <script src="assets/script.js"></script>
+
 </body>
 </html>
