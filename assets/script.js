@@ -111,7 +111,6 @@ function getLatLon(searchTerm) {
         .then(response => response.json())
         .then(data => {
 
-            // Retrieve latitudinal and longitudinal coordinates.
             cityLat = data[0].lat;
             cityLon = data[0].lon;   
 
