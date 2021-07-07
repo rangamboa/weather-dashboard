@@ -2,15 +2,14 @@
 var dateNow;
 var requestUrl;
 
-var buttonEl = $('.searchBtn');
 var cityInput = $('#city');
-var searchBtn = $('#search');
 var cityName = $('#currentCity');
 var currTemp = $('#cityTemp');
 var currWind = $('#cityWind');
 var currHum = $('#cityHum');
 var currUv = $('#cityUv');
 var currIcon = $('#wIcon');
+var searchBtn = $('#search');
 var cityList = $('#cityHistory');
 var currUvColor;
 var cityLat;
@@ -29,12 +28,13 @@ function init() {
     // If cities were retrieved, then update the "cities" array.
     if (storedCities !== null) cities = storedCities;
 
+    // Display array of stored city names.
     writeCities();
 }
 
 function writeCities() {
 
-    // Resets city list.
+    // Resets city list display to re-write.
     cityList.empty();
 
     // Create a new button for each city in search history.
@@ -42,16 +42,17 @@ function writeCities() {
         var cityItem = cities[i];
         cityList.append('<button class="btn btn-secondary btn-long searchBtn">'+cityItem+'</button>');
     }
-    buttonEl = $('.searchBtn');
-    console.log(buttonEl);
 }
 
 function storeCities() {
-    // Stringify object and set a key in localStorage to "cities" array.
+
+    // Stringify object and set a key in localStorage to the "cities" array.
     localStorage.setItem("cities", JSON.stringify(cities));
 }
 
 function getDate() {
+
+    // Get today's date to display in current weather window.
     var timeNow = moment().format("MM[/]DD[/]YYYY")
     $("#currentDate").text(timeNow);
 }
@@ -59,17 +60,39 @@ function getDate() {
 cityList.on('click', function(event) {
 
     event.preventDefault();
-    searchTerm = event.target.textContent;
+
+    // Convert the search term to lowercase for easier string comparison.
+    searchTerm = event.target.textContent.toLowerCase();
+
+    // This loop cycles through the search history and moves the selected city to the top of the list, then displays current weather information.
+    for (i = 0; i < cities.length; i++) {
+
+        var recentCity = cities[i].toLowerCase();
+
+        if (searchTerm === recentCity) {
+
+            if (i == 0) return;
+            cities.splice(i,1); 
+
+            storeCities();
+            writeCities();
+        }
+    }
     getLatLon(searchTerm);
 });
 
 searchBtn.on('click', function(event) {
 
     event.preventDefault();
-    searchTerm = cityInput.val();
+
+    // If the same city is entered more than once, do not add to the search history.
+    searchTerm = cityInput.val().toLowerCase();
+    if (cities.length >= 1) var recentCity = cities[0].toLowerCase();
 
     if (searchTerm === '') {
         alert('Please enter a city name to\nsearch current weather and forecast.');
+        return;
+    } else if (searchTerm === recentCity) {
         return;
     } else {
         // Clear search field.
@@ -80,12 +103,8 @@ searchBtn.on('click', function(event) {
 
 function getLatLon(searchTerm) {
 
-    console.log(searchTerm);
-
     // Insert search term into geocoding API call.
     requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + searchTerm + '&limit=1&units=imperial&appid=b2a7b5db503cb0af44066eca2b902469';
-
-    // console.log(requestUrl);
 
     fetch(requestUrl)
 
@@ -94,16 +113,15 @@ function getLatLon(searchTerm) {
 
             // Retrieve latitudinal and longitudinal coordinates.
             cityLat = data[0].lat;
-            cityLon = data[0].lon;
+            cityLon = data[0].lon;   
 
-            // Retrieve and display current city name.
+            // Retrieve and display current city name from API response.
             cityName.text(data[0].name);
 
-            // Store city name in array to be pushed to local storage.
+            // Store city name in first element array to be pushed to local storage.
             cities.unshift(data[0].name);
 
-            console.log(cities);
-
+            // Store search items in array, then re-write history display. 
             storeCities();
             writeCities();
 
@@ -120,13 +138,10 @@ function getInfo() {
 
     // Insert latitude and longitude into API One Call.
     requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + cityLat + '&lon=' + cityLon + '&units=imperial&exclude=minutely,hourly&appid=b2a7b5db503cb0af44066eca2b902469';    
-    
-    console.log(requestUrl);
-    fetch(requestUrl)
 
-        .then(response => response.json())
-        .then(data => {
-        console.log(data);
+    fetch(requestUrl)
+    .then(response => response.json())
+    .then(data => {
 
         // Display current weather icon.
         iconCode = data.current.weather[0].icon;
@@ -141,19 +156,11 @@ function getInfo() {
         currUv.text(data.current.uvi);
 
         // Change font/background color for UV Index depending on value, for readability.
-        if (data.current.uvi <= 2) {
-            uvColor = 'white';
-            uvBg = 'green';
-        } else if (data.current.uvi <= 5) {
-            uvColor = 'black';
-            uvBg = 'yellow';
-        } else if (data.current.uvi <= 7) {
-            uvColor = 'black';
-            uvBg = 'orange';
-        } else {
-            uvColor = 'white';
-            uvBg = 'red';
-        }
+        if (data.current.uvi <= 2) { uvColor = 'white'; uvBg = 'green'; }
+        else if (data.current.uvi <= 5) { uvColor = 'black'; uvBg = 'yellow'; }
+        else if (data.current.uvi <= 7) { uvColor = 'black'; uvBg = 'orange'; }
+        else { uvColor = 'white'; uvBg = 'red'; }
+
         currUv.css('color', uvColor);
         currUv.css('background-color', uvBg); 
 
@@ -162,7 +169,7 @@ function getInfo() {
         // Loop through API data 5 times, once for each day in forecast.
         for (var i = 1; i < 6; i++) {
 
-            // Set the div in which to write data.
+            // Specify the div ID in which to write data.
             var dayId = '#day' + i;
 
             // Pull data and convert to string.
@@ -182,8 +189,8 @@ function getInfo() {
             $(dayId).append('<li class="list-group-item dailyCard">Humidity: '+futureHum+'%</li>');
             $(dayId).append('</ul>');
         }
-      
     });
 }
 
+// Run initial functions to prep browser.
 init();
