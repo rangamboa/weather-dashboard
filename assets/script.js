@@ -154,7 +154,7 @@ function getInfo() {
         // Display current weather icon.
         iconCode = data.current.weather[0].icon;
         iconCode.toString();
-        iconUrl = 'http://openweathermap.org/img/w/' + iconCode + '.png';
+        iconUrl = 'https://openweathermap.org/img/w/' + iconCode + '.png';
         currIcon.attr('src', iconUrl);
 
         // Display current weather info in upper section of layout.
