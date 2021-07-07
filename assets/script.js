@@ -106,7 +106,7 @@ searchBtn.on('click', function(event) {
 function getLatLon(searchTerm) {
 
     // Insert search term into geocoding API call.
-    requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + searchTerm + '&limit=1&units=imperial&appid=b2a7b5db503cb0af44066eca2b902469';
+    requestUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchTerm + '&limit=1&units=imperial&appid=b2a7b5db503cb0af44066eca2b902469';
 
     fetch(requestUrl)
 
