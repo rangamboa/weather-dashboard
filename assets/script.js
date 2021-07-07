@@ -42,6 +42,7 @@ function writeCities() {
         var cityItem = cities[i];
         cityList.append('<button class="btn btn-secondary btn-long searchBtn">'+cityItem+'</button>');
     }
+    cityInput.val('Enter city name.');
 }
 
 function storeCities() {
@@ -96,7 +97,8 @@ searchBtn.on('click', function(event) {
         return;
     } else {
         // Clear search field.
-        cityInput.textContent = '';
+        // cityInput.textContent = '';
+        cityInput.val('Enter city name.');
         getLatLon(searchTerm);
     }
 });
@@ -111,6 +113,13 @@ function getLatLon(searchTerm) {
         .then(response => response.json())
         .then(data => {
 
+            // Terminate function if the city name is invalid.
+            if (data.length == 0) {
+                alert('Please click a city in the recent searches\nor enter a valid city name.');
+                return;
+            }
+
+            // Retrieve latitude and longitude values.
             cityLat = data[0].lat;
             cityLon = data[0].lon;   
 
@@ -130,7 +139,7 @@ function getLatLon(searchTerm) {
 
             // Call function for API using lat and lon coordinates to obtain more information.
             getInfo();
-        })
+        });
 }
 
 function getInfo() {
